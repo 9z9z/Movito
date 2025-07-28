@@ -1,19 +1,5 @@
-const favKey = 'movito_favorites';
-const watchLaterKey = 'movito_watchlater';
-
-export function getList(key) {
-  return JSON.parse(localStorage.getItem(key) || '[]');
-}
-export function toggleItem(key, item) {
-  const list = getList(key);
-  const exists = list.find(i => i.id === item.id && i.type === item.type);
-  if (exists) {
-    localStorage.setItem(key, JSON.stringify(list.filter(i => !(i.id===item.id&&i.type===item.type))));
-  } else {
-    list.push(item);
-    localStorage.setItem(key, JSON.stringify(list));
-  }
-}
-export function isInList(key, item) {
-  return getList(key).some(i => i.id===item.id && i.type===item.type);
-}
+export const favKey = 'movito_favorites';
+export const watchLaterKey = 'movito_watchlater';
+export function getList(k){return JSON.parse(localStorage.getItem(k)||'[]')}
+export function toggleItem(k,item){const l=getList(k),e=l.find(i=>i.id===item.id&&i.type===item.type);if(e) localStorage.setItem(k,JSON.stringify(l.filter(i=>!(i.id===item.id&&i.type===item.type))));else{l.push(item);localStorage.setItem(k,JSON.stringify(l))}}
+export function isInList(k,item){return getList(k).some(i=>i.id===item.id&&i.type===item.type)}
