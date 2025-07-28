@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>تفاصيل فيلم - Movito</title>
@@ -13,42 +13,16 @@
       <h1 id="title"></h1>
       <p id="year-rating"></p>
       <p id="genres"></p>
-      <p id="overview"></p>
+      <div id="overview"></div>
       <h3>طاقم العمل والإخراج</h3>
       <ul id="crew-list"></ul>
       <h3>الكلمات المفتاحية</h3>
       <p id="keywords"></p>
-      <button id="watch-btn" class="watch-btn">شاهد الآن</button>
+      <h3>سيرفر المشاهدة</h3>
+      <iframe id="server-frame" src="" allowfullscreen></iframe>
       <a href="index.html" class="back-btn">عودة</a>
     </div>
   </main>
-  <script>
-    const apiKey='6b2dec73b6697866a50cdaef60ccffcb';
-    const params=new URLSearchParams(location.search);
-    const id=params.get('id');
-    fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&append_to_response=credits,keywords&language=ar`)
-    .then(r=>r.json()).then(data=>{
-      document.getElementById('photo').innerHTML=`<img src="https://image.tmdb.org/t/p/original/${data.poster_path}"/>`;
-      document.getElementById('title').textContent=data.title;
-      document.getElementById('year-rating').textContent=(data.release_date||'').slice(0,4)+` • ⭐ ${data.vote_average}`;
-      document.getElementById('genres').textContent=data.genres.map(g=>g.name).join(', ');
-      document.getElementById('overview').textContent=data.overview;
-      // crew: مخرجين
-      const crewList=document.getElementById('crew-list');
-      data.credits.crew.filter(c=>c.job==='Director').forEach(d=>{
-        const li=document.createElement('li');
-        li.innerHTML=`<a href="personDetail.html?id=${d.id}">${d.name} (مخرج)</a>`;
-        crewList.appendChild(li);
-      });
-      // cast
-      data.credits.cast.slice(0,10).forEach(c=>{
-        const li=document.createElement('li');
-        li.innerHTML=`<a href="personDetail.html?id=${c.id}">${c.name} as ${c.character}</a>`;
-        crewList.appendChild(li);
-      });
-      document.getElementById('keywords').textContent=data.keywords.keywords.map(k=>k.name).join(', ');
-      document.getElementById('watch-btn').onclick=()=>location.href=`watch.html?id=${id}&type=movie`;
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
