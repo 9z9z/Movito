@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>بحث - Movito</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <nav class="navbar"><div class="logo">Movito</div></nav>
+  <main class="movies-section" id="search-results"></main>
+  <template id="movie-card-template">
+    <div class="movie-card">
+      <a class="detail-link" href=""><img class="poster" src="" alt="" /></a>
+      <h3 class="title"></h3>
+      <p class="info"></p>
+    </div>
+  </template>
+  <script>
+    const apiKey = '6b2dec73b6697866a50cdaef60ccffcb';
+    const params = new URLSearchParams(location.search);
+    const q = params.get('q');
+    async function doSearch(){
+      const res = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&language=ar&query=${encodeURIComponent(q)}`);
+      const data = await res.json();
+      const cont = document.getElementById('search-results'); cont.innerHTML='';
+      data.results.forEach(item=>{
+        const tpl=document.getElementById('movie-card-template').content.cloneNode(true);
+        const img=tpl.querySelector('.poster'),link=tpl.querySelector('.detail-link');
+        img.src=`https://image.tmdb.org/t/p/w500/${item.poster_path||item.backdrop_path}`;
+        img.onerror=()=>img.src='resources/D_moviesand_tv_show.png';
+        tpl.querySelector('.title').textContent=item.title||item.name;
+        tpl.querySelector('.info').textContent=(item.release_date||item.first_air_date||'').slice(0,4)+` • ⭐ ${item.vote_average}`;
+        const type = item.media_type === 'tv'?'tv':'movie';
+        link.href=`${type==='tv'?'tvShowsDetails':'movieDetail'}.html?id=${item.id}&type=${type}`;
+        cont.appendChild(tpl);
+      });
+    }
+    doSearch();
+  </script>
+</body>
+</html>ss
