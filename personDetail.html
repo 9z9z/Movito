@@ -1,33 +1,41 @@
 <!DOCTYPE html>
 <html lang="ar">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>شخصية - Movito</title>
-  <link rel="stylesheet" href="style.css" />
+<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>شخص - Movito</title>
+<link rel="stylesheet" href="style.css"/>
 </head>
 <body>
   <nav class="navbar"><div class="logo">Movito</div></nav>
   <main class="detail-page">
-    <div class="poster-big" id="person-photo"></div>
+    <div class="poster-big" id="photo"></div>
     <div class="detail-info">
-      <h1 id="person-name"></h1>
-      <p id="person-bio"></p>
-      <p id="person-known"></p>
-      <a href="javascript:history.back()" class="back-btn">عودة</a>
+      <h1 id="name"></h1>
+      <p id="bio"></p>
+      <h3>أعماله</h3>
+      <ul id="credits-list"></ul>
+      <a href="index.html" class="back-btn">عودة</a>
     </div>
   </main>
   <script>
-    const apiKey = '6b2dec73b6697866a50cdaef60ccffcb';
-    const params = new URLSearchParams(location.search);
-    const id = params.get('id');
-    fetch(`https://api.themoviedb.org/3/person/${id}?api_key=${apiKey}&language=ar`)
-      .then(r=>r.json()).then(data=>{
-        document.getElementById('person-photo').innerHTML=`<img src="https://image.tmdb.org/t/p/original/${data.profile_path}"/>`;
-        document.getElementById('person-name').textContent=data.name;
-        document.getElementById('person-bio').textContent=data.biography;
-        document.getElementById('person-known').textContent='معروف ب: '+data.known_for_department;
-      });
+    const apiKey='6b2dec73b6697866a50cdaef60ccffcb';
+    const params=new URLSearchParams(location.search);const id=params.get('id');
+    fetch(`https://api.themoviedb.org/3/person/${id}?api_key=${apiKey}&append_to_response=combined_credits&language=ar`)
+    .then(r=>r.json()).then(data=>{
+      document.getElementById('photo').innerHTML=`<img src="https://image.tmdb.org/t/p/original/${data.profile_path}"/>`;
+      document.getElementById('name').textContent=data.name;
+      document.getElementById('bio').textContent=data.biography;
+      const ul=document.getElementById('credits-list');
+      data.combined_credits.cast.concat(data.combined_credits.crew)
+        .sort((a,b)=> (b.popularity||0)-(a.popularity||0))
+        .slice(0,20)
+        .forEach(item=>{
+          const li=document.createElement('li');
+          const type=item.media_type;
+          const title=item.title||item.name;
+          li.innerHTML=`<a href="${type==='tv'?'tvShowsDetails':'movieDetail'}.html?id=${item.id}&type=${type}">${title}</a> (${type})`;
+          ul.appendChild(li);
+        });
+    });
   </script>
 </body>
 </html>
