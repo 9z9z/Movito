@@ -3,26 +3,34 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>موقع الأفلام</title>
+  <title>موقع الأفلام والمسلسلات</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <nav class="navbar">
     <div class="logo">أفلام اليوم</div>
     <ul class="menu">
-      <li class="active" data-section="now_playing">جاري العرض</li>
-      <li data-section="popular">الشعبية</li>
-      <li data-section="top_rated">الأعلى تقييماً</li>
-      <li data-section="trending">الترند اليوم</li>
+      <li class="active" data-section="movie_now_playing">جاري العرض</li>
+      <li data-section="movie_popular">الأكثر شعبية</li>
+      <li data-section="movie_top_rated">الأعلى تقييماً</li>
+      <li data-section="movie_upcoming">القادم قريباً</li>
+      <li data-section="tv_popular">مسلسلات شعبية</li>
+      <li data-section="tv_top_rated">مسلسلات الأعلى تقييماً</li>
+      <li data-section="tv_on_the_air">مسلسلات تُعرض الآن</li>
+      <li data-section="trending_all_day">الترند اليوم</li>
     </ul>
     <button id="mode-toggle">🌙</button>
   </nav>
 
   <main>
-    <section id="now_playing" class="movies-section"></section>
-    <section id="popular" class="movies-section hide"></section>
-    <section id="top_rated" class="movies-section hide"></section>
-    <section id="trending" class="movies-section hide"></section>
+    <section id="movie_now_playing" class="movies-section"></section>
+    <section id="movie_popular" class="movies-section hide"></section>
+    <section id="movie_top_rated" class="movies-section hide"></section>
+    <section id="movie_upcoming" class="movies-section hide"></section>
+    <section id="tv_popular" class="movies-section hide"></section>
+    <section id="tv_top_rated" class="movies-section hide"></section>
+    <section id="tv_on_the_air" class="movies-section hide"></section>
+    <section id="trending_all_day" class="movies-section hide"></section>
   </main>
 
   <template id="movie-card-template">
