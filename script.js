@@ -1,10 +1,23 @@
 const apiKey = '6b2dec73b6697866a50cdaef60ccffcb';
-const sections = ['now_playing', 'popular', 'top_rated', 'trending'];
+const sections = [
+  'movie_now_playing',
+  'movie_popular',
+  'movie_top_rated',
+  'movie_upcoming',
+  'tv_popular',
+  'tv_top_rated',
+  'tv_on_the_air',
+  'trending_all_day'
+];
 const endpoints = {
-  now_playing: `/movie/now_playing`,
-  popular: `/movie/popular`,
-  top_rated: `/movie/top_rated`,
-  trending: `/trending/all/day`
+  movie_now_playing: `/movie/now_playing`,
+  movie_popular: `/movie/popular`,
+  movie_top_rated: `/movie/top_rated`,
+  movie_upcoming: `/movie/upcoming`,
+  tv_popular: `/tv/popular`,
+  tv_top_rated: `/tv/top_rated`,
+  tv_on_the_air: `/tv/on_the_air`,
+  trending_all_day: `/trending/all/day`
 };
 
 // تبديل الوضع الليلي/نهاري
@@ -18,26 +31,40 @@ modeToggle.addEventListener('click', () => {
   if (theme === 'light') document.body.classList.add('light');
 })();
 
-// سحب وعرض الأفلام
-async function fetchMovies(section) {
-  const url = `https://api.themoviedb.org/3${endpoints[section]}?api_key=${apiKey}&language=ar&page=1`;
-  const res = await fetch(url);
-  const data = await res.json();
-  return data.results;
+// جلب جميع الصفحات (مثال أول 5 صفحات)
+async function fetchAllResults(url) {
+  let page = 1;
+  let results = [];
+  while (page <= 5) {
+    const res = await fetch(`${url}&page=${page}`);
+    const data = await res.json();
+    results = results.concat(data.results);
+    if (page >= data.total_pages) break;
+    page++;
+  }
+  return results;
 }
 
-function renderSection(section, movies) {
+// جلب قسم محدد
+async function fetchSection(section) {
+  const endpoint = endpoints[section];
+  const url = `https://api.themoviedb.org/3${endpoint}?api_key=${apiKey}&language=ar`;
+  return await fetchAllResults(url);
+}
+
+// عرض العناصر
+function renderSection(section, items) {
   const container = document.getElementById(section);
-  const template = document.getElementById('movie-card-template');
+  const tpl = document.getElementById('movie-card-template');
   container.innerHTML = '';
-  movies.forEach(movie => {
-    const clone = template.content.cloneNode(true);
+  items.forEach(item => {
+    const clone = tpl.content.cloneNode(true);
     const img = clone.querySelector('.poster');
-    img.src = `https://image.tmdb.org/t/p/w500/${movie.poster_path}`;
+    img.src = `https://image.tmdb.org/t/p/w500/${item.poster_path || item.backdrop_path}`;
     img.onerror = () => img.src = 'resources/D_moviesand_tv_show.png';
-    clone.querySelector('.title').textContent = movie.title || movie.name;
-    const year = (movie.release_date || movie.first_air_date || '').slice(0,4);
-    const rating = movie.vote_average;
+    clone.querySelector('.title').textContent = item.title || item.name;
+    const year = (item.release_date || item.first_air_date || '').slice(0,4);
+    const rating = item.vote_average;
     clone.querySelector('.info').textContent = `${year} • ⭐ ${rating}`;
     container.appendChild(clone);
   });
@@ -52,13 +79,13 @@ menuItems.forEach(item => {
     const sec = item.dataset.section;
     sections.forEach(s => document.getElementById(s).classList.add('hide'));
     document.getElementById(sec).classList.remove('hide');
-    const movies = await fetchMovies(sec);
-    renderSection(sec, movies);
+    const items = await fetchSection(sec);
+    renderSection(sec, items);
   });
 });
 
 // التحميل الأولي
 window.addEventListener('DOMContentLoaded', async () => {
-  const movies = await fetchMovies('now_playing');
-  renderSection('now_playing', movies);
+  const items = await fetchSection('movie_now_playing');
+  renderSection('movie_now_playing', items);
 });
