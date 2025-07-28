@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>تفاصيل مسلسل - Movito</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <nav class="navbar"><div class="logo">Movito</div></nav>
+  <main class="detail-page">
+    <div class="poster-big" id="tv-photo"></div>
+    <div class="detail-info">
+      <h1 id="tv-name"></h1>
+      <p id="tv-year-rating"></p>
+      <p id="tv-overview"></p>
+      <h3>المواسم والحلقات</h3>
+      <ul id="seasons-list"></ul>
+      <button id="watch-btn" class="watch-btn">شاهد الآن</button>
+      <a href="index.html" class="back-btn">عودة للرئيسية</a>
+    </div>
+  </main>
+  <script>
+    const apiKey='6b2dec73b6697866a50cdaef60ccffcb';
+    const params=new URLSearchParams(location.search);
+    const id=params.get('id');
+    fetch(`https://api.themoviedb.org/3/tv/${id}?api_key=${apiKey}&language=ar`)
+      .then(r=>r.json()).then(data=>{
+        document.getElementById('tv-photo').innerHTML=`<img src="https://image.tmdb.org/t/p/original/${data.poster_path}"/>`;
+        document.getElementById('tv-name').textContent=data.name;
+        document.getElementById('tv-year-rating').textContent=(data.first_air_date||'').slice(0,4)+` • ⭐ ${data.vote_average}`;
+        document.getElementById('tv-overview').textContent=data.overview;
+        const ul=document.getElementById('seasons-list');
+        data.seasons.forEach(s=>{
+          const li=document.createElement('li');
+          li.textContent=`${s.name} - ${s.episode_count} حلقة`;
+          ul.appendChild(li);
+        });
+        document.getElementById('watch-btn').onclick=()=>location.href=`watch.html?id=${id}&type=tv`;
+      });
+  </script>
+</body>
+</html>
