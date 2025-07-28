@@ -2,28 +2,36 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>تفاصيل فيلم - Movito</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>تفاصيل الفيلم - موفيتو</title>
+  <link rel="stylesheet" href="../style.css" />
 </head>
 <body>
-  <nav class="navbar"><div class="logo">Movito</div></nav>
-  <main class="detail-page">
-    <div class="poster-big" id="photo"></div>
-    <div class="detail-info">
-      <h1 id="title"></h1>
-      <p id="year-rating"></p>
-      <p id="genres"></p>
-      <div id="overview"></div>
-      <h3>طاقم العمل والإخراج</h3>
-      <ul id="crew-list"></ul>
-      <h3>كلمات مفتاحية</h3>
-      <p id="keywords"></p>
-      <h3>سيرفر المشاهدة</h3>
-      <iframe id="server-frame" src="" allowfullscreen></iframe>
-      <a href="index.html" class="back-btn">عودة</a>
-    </div>
+  <header>
+    <h1>موفيتو | Movito</h1>
+    <nav>
+      <a href="../index.html">الرئيسية</a>
+      <a href="topRated.html">الأعلى تقييماً</a>
+      <a href="anime.html">أنمي</a>
+      <a href="collections.html">سلاسل أفلام</a>
+      <a href="search.html">بحث</a>
+      <a href="admin.html">لوحة التحكم</a>
+    </nav>
+  </header>
+  <main id="movie-detail">
+    <h2 id="title">جاري التحميل...</h2>
+    <img id="poster" alt="بوستر الفيلم" />
+    <p id="overview"></p>
+    <div id="genres"></div>
+    <h3>المخرجين</h3>
+    <ul id="directors"></ul>
+    <h3>الممثلين</h3>
+    <ul id="cast"></ul>
+    <h3>الكلمات المفتاحية</h3>
+    <ul id="keywords"></ul>
+    <h3>السيرفر للمشاهدة</h3>
+    <iframe id="watch-server" src="" frameborder="0" allowfullscreen style="width: 100%; height: 500px;"></iframe>
   </main>
-  <script src="script.js"></script>
+  <script type="module" src="../js/movieDetail.js"></script>
 </body>
 </html>
