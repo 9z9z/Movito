@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>موقع الأفلام</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">أفلام اليوم</div>
+    <ul class="menu">
+      <li class="active" data-section="now_playing">جاري العرض</li>
+      <li data-section="popular">الشعبية</li>
+      <li data-section="top_rated">الأعلى تقييماً</li>
+      <li data-section="trending">الترند اليوم</li>
+    </ul>
+    <button id="mode-toggle">🌙</button>
+  </nav>
+
+  <main>
+    <section id="now_playing" class="movies-section"></section>
+    <section id="popular" class="movies-section hide"></section>
+    <section id="top_rated" class="movies-section hide"></section>
+    <section id="trending" class="movies-section hide"></section>
+  </main>
+
+  <template id="movie-card-template">
+    <div class="movie-card">
+      <img class="poster" src="" alt="" />
+      <h3 class="title"></h3>
+      <p class="info"></p>
+    </div>
+  </template>
+
+  <script src="script.js"></script>
+</body>
+</html>

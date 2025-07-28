@@ -1,0 +1,17 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: sans-serif; background: #111; color: #eee; transition: background 0.3s, color 0.3s; }
+body.light { background: #f5f5f5; color: #222; }
+.navbar { display: flex; align-items: center; padding: 1rem; background: #222; }
+body.light .navbar { background: #ddd; }
+.logo { font-size: 1.5rem; flex: 1; }
+.menu { list-style: none; display: flex; gap: 1rem; }
+.menu li { cursor: pointer; padding: 0.5rem; }
+.menu li.active { border-bottom: 2px solid #f39c12; }
+.movies-section { padding: 2rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1.5rem; }
+.hide { display: none; }
+.movie-card { background: #333; padding: 1rem; border-radius: 8px; text-align: center; transition: transform 0.3s; }
+body.light .movie-card { background: #fff; }
+.movie-card:hover { transform: scale(1.05); }
+.movie-card .poster { width: 100%; border-radius: 4px; }
+.movie-card .title { margin: 0.5rem 0; font-size: 1rem; }
+.movie-card .info { font-size: 0.9rem; opacity: 0.8; }
