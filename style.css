@@ -1,1 +1,14 @@
-body { background:#121212; color:white; font-family:sans-serif; padding:20px } .card { margin:10px; display:inline-block; width:200px; text-align:center; } img { width:100% }
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Tajawal',sans-serif;direction:rtl;background:#111;color:#eee;}
+.navbar{display:flex;align-items:center;justify-content:space-between;padding:1rem;background:#1a1a1a;}
+.logo{font-size:1.8rem;color:#f5c518}
+.nav-links a{margin:0 0.5rem;color:#fff;text-decoration:none;}
+.nav-links a:hover{color:#f5c518}
+#trending,#top-rated{padding:2rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:1rem}
+.card{background:#222;border-radius:8px;overflow:hidden;transition:transform .3s}
+.card:hover{transform:scale(1.05)}
+.card img{width:100%;display:block}
+.card h4{padding:.5rem;color:#f5c518;text-align:center}
+button#mode-toggle{background:none;border:none;color:#f5c518;font-size:1.2rem;cursor:pointer}
+footer{padding:1rem;text-align:center;color:#555;background:#0d0d0d}
