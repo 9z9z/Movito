@@ -1,5 +1,5 @@
 import { fetchFromTMDB } from './utils.js';
-import { toggleItem, isInList } from './favorites.js';
+import { toggleItem, isInList, favKey, watchLaterKey } from './favorites.js';
 
 const id = new URLSearchParams(location.search).get('id');
 const titleEl = document.getElementById('title');
@@ -11,54 +11,38 @@ const castEl = document.getElementById('cast');
 const keywordsEl = document.getElementById('keywords');
 const watchServerEl = document.getElementById('watch-server');
 
-let customData = {
-  iframeSrc: '',
-  title: '',
-  description: '',
-  keywords: '',
-};
-
 async function loadMovie() {
-  try {
-    const data = await fetchFromTMDB(`/movie/${id}?append_to_response=credits,keywords`);
-    titleEl.textContent = data.title;
-    overviewEl.textContent = data.overview;
-    posterEl.src = data.poster_path ? `https://image.tmdb.org/t/p/w500${data.poster_path}` : '../assets/fallback.png';
-    genresEl.textContent = 'النوع: ' + data.genres.map(g => g.name).join(', ');
-
-    // مخرجين
-    const directors = data.credits.crew.filter(c => c.job === 'Director');
-    directorsEl.innerHTML = directors.map(d => `<li><a href="personDetail.html?id=${d.id}">${d.name}</a></li>`).join('');
-
-    // ممثلين (5 الأوائل)
-    const cast = data.credits.cast.slice(0, 5);
-    castEl.innerHTML = cast.map(c => `<li><a href="personDetail.html?id=${c.id}">${c.name}</a></li>`).join('');
-
-    // كلمات مفتاحية
-    keywordsEl.innerHTML = data.keywords.keywords.map(k => `<li>${k.name}</li>`).join('');
-
-    // استخدم السيرفر الافتراضي إذا موجود في localStorage
-    const defaultServer = localStorage.getItem('movito_default_server');
-    watchServerEl.src = customData.iframeSrc || defaultServer || '';
-
-    // تعديل الداتا الخاصة في اللوحة التحكم
-    if (localStorage.getItem(`movie_${id}_iframeSrc`)) {
-      watchServerEl.src = localStorage.getItem(`movie_${id}_iframeSrc`);
-    }
-    if (localStorage.getItem(`movie_${id}_title`)) {
-      titleEl.textContent = localStorage.getItem(`movie_${id}_title`);
-    }
-    if (localStorage.getItem(`movie_${id}_description`)) {
-      overviewEl.textContent = localStorage.getItem(`movie_${id}_description`);
-    }
-    if (localStorage.getItem(`movie_${id}_keywords`)) {
-      keywordsEl.innerHTML = localStorage.getItem(`movie_${id}_keywords`);
-    }
-
-  } catch (error) {
-    titleEl.textContent = 'خطأ في جلب بيانات الفيلم';
-    overviewEl.textContent = error.message;
-  }
+  const data = await fetchFromTMDB(`/movie/${id}?append_to_response=credits,keywords,videos`);
+  titleEl.textContent = data.title;
+  overviewEl.textContent = data.overview;
+  posterEl.src = data.poster_path ? `https://image.tmdb.org/t/p/w300${data.poster_path}` : '../assets/fallback.png';
+  genresEl.textContent = 'النوع: ' + data.genres.map(g => g.name).join(', ');
+  directorsEl.innerHTML = data.credits.crew.filter(c => c.job === 'Director')
+    .map(d => `<li>${d.name}</li>`).join('');
+  castEl.innerHTML = data.credits.cast.slice(0,5)
+    .map(c => `<li>${c.name}</li>`).join('');
+  keywordsEl.innerHTML = data.keywords.keywords
+    .map(k => `<li>${k.name}</li>`).join('');
+  const trailer = data.videos.results.find(v => v.type === 'Trailer' && v.site === 'YouTube');
+  watchServerEl.src = trailer 
+    ? `https://www.youtube.com/embed/${trailer.key}?autoplay=1` 
+    : localStorage.getItem('movito_default_server') || '';
+  
+  // إضافة أزرار المفضلة وWatch Later
+  const parent = document.createElement('div');
+  parent.innerHTML = `
+    <button id="fav-btn">${isInList(favKey,{id:+id,type:'movie'})?'💔':'❤️'}</button>
+    <button id="wl-btn">${isInList(watchLaterKey,{id:+id,type:'movie'})?'❌':'🕒'}</button>
+  `;
+  titleEl.after(parent);
+  document.getElementById('fav-btn').onclick = () => {
+    toggleItem(favKey,{id:+id,type:'movie'});
+    document.getElementById('fav-btn').textContent = isInList(favKey,{id:+id,type:'movie'})?'💔':'❤️';
+  };
+  document.getElementById('wl-btn').onclick = () => {
+    toggleItem(watchLaterKey,{id:+id,type:'movie'});
+    document.getElementById('wl-btn').textContent = isInList(watchLaterKey,{id:+id,type:'movie'})?'❌':'🕒';
+  };
 }
 
 loadMovie();
