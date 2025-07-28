@@ -3,23 +3,38 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>موقع الأفلام والمسلسلات</title>
+  <title>Movito | موفيتو</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <nav class="navbar">
-    <div class="logo">أفلام اليوم</div>
+    <div class="logo">Movito</div>
     <ul class="menu">
       <li class="active" data-section="movie_now_playing">جاري العرض</li>
       <li data-section="movie_popular">الأكثر شعبية</li>
       <li data-section="movie_top_rated">الأعلى تقييماً</li>
       <li data-section="movie_upcoming">القادم قريباً</li>
       <li data-section="tv_popular">مسلسلات شعبية</li>
-      <li data-section="tv_top_rated">مسلسلات الأعلى تقييماً</li>
-      <li data-section="tv_on_the_air">مسلسلات تُعرض الآن</li>
-      <li data-section="trending_all_day">الترند اليوم</li>
+      <li data-section="tv_top_rated">أفضل المسلسلات</li>
+      <li data-section="tv_on_the_air">عرض الآن</li>
+      <li data-section="trending_all_day">ترند اليوم</li>
     </ul>
-    <button id="mode-toggle">🌙</button>
+    <div class="controls">
+      <label for="genre-select">النوع:</label>
+      <select id="genre-select"></select>
+      <label for="lang-select">اللغة:</label>
+      <select id="lang-select">
+        <option value="ar">العربية</option>
+        <option value="en">English</option>
+        <option value="all" selected>الكل</option>
+      </select>
+      <label for="sort-select">رتّب حسب:</label>
+      <select id="sort-select">
+        <option value="rating">التقييم</option>
+        <option value="year">السنة</option>
+      </select>
+      <button id="mode-toggle">🌓</button>
+    </div>
   </nav>
 
   <main>
@@ -35,7 +50,7 @@
 
   <template id="movie-card-template">
     <div class="movie-card">
-      <img class="poster" src="" alt="" />
+      <a class="detail-link" href=""><img class="poster" src="" alt="" /></a>
       <h3 class="title"></h3>
       <p class="info"></p>
     </div>
