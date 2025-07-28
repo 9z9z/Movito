@@ -1,44 +1,30 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Movito | موفيتو</title>
-  <meta name="keywords" content="أفلام، مسلسلات، أنمي، TMDB" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <nav class="navbar">
+  <header class="navbar">
     <div class="logo">Movito</div>
-    <ul class="menu">
-      <li class="active" data-section="discover_all">الكُل</li>
-      <li data-section="movie_now_playing">جاري العرض</li>
-      <li data-section="movie_popular">الأكثر شعبية</li>
-      <li data-section="movie_upcoming">القادم</li>
-      <li data-section="tv_popular">مسلسلات</li>
-      <li data-section="anime">أنمي</li>
-      <li data-section="trending_all_day">ترند اليوم</li>
-    </ul>
     <div class="controls">
-      <input id="search-input" type="text" placeholder="ابحث عن فيلم، مسلسل، أو شخص..." />
+      <input id="search-input" placeholder="ابحث عن فيلم، مسلسل، أو شخص..." />
       <button id="search-btn">🔍</button>
       <button id="mode-toggle">🌓</button>
     </div>
-  </nav>
+  </header>
 
-  <main>
-    <section id="discover_all" class="movies-section"></section>
-    <section id="movie_now_playing" class="movies-section hide"></section>
-    <section id="movie_popular" class="movies-section hide"></section>
-    <section id="movie_upcoming" class="movies-section hide"></section>
-    <section id="tv_popular" class="movies-section hide"></section>
-    <section id="anime" class="movies-section hide"></section>
-    <section id="trending_all_day" class="movies-section hide"></section>
-  </main>
+  <section class="slider-section">
+    <button class="slide-btn prev">❮</button>
+    <div class="slider" id="slider-container"></div>
+    <button class="slide-btn next">❯</button>
+  </section>
 
-  <template id="item-card-template">
-    <div class="item-card">
-      <a class="detail-link" href=""><img class="poster" src="" alt="" /></a>
+  <template id="card-template">
+    <div class="card">
+      <a class="detail-link" href=""><img class="poster" src="" /></a>
       <h3 class="title"></h3>
       <p class="info"></p>
     </div>
