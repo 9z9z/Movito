@@ -4,35 +4,40 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Movito | موفيتو</title>
-  <meta name="keywords" content="أفلام، مسلسلات، TMDB، مشاهدة، تنزيل، تقييم" />
+  <meta name="keywords" content="أفلام، مسلسلات، أنمي، TMDB" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <nav class="navbar">
     <div class="logo">Movito</div>
     <ul class="menu">
-      <!-- اقسام الأفلام والمسلسلات -->
-      <li class="active" data-section="movie_now_playing">جاري العرض</li>
+      <li class="active" data-section="discover_all">الكُل</li>
+      <li data-section="movie_now_playing">جاري العرض</li>
       <li data-section="movie_popular">الأكثر شعبية</li>
-      <li data-section="tv_popular">مسلسلات شعبية</li>
+      <li data-section="movie_upcoming">القادم</li>
+      <li data-section="tv_popular">مسلسلات</li>
+      <li data-section="anime">أنمي</li>
       <li data-section="trending_all_day">ترند اليوم</li>
     </ul>
     <div class="controls">
-      <input id="search-input" type="text" placeholder="ابحث عن فيلم أو مسلسل..." />
+      <input id="search-input" type="text" placeholder="ابحث عن فيلم، مسلسل، أو شخص..." />
       <button id="search-btn">🔍</button>
       <button id="mode-toggle">🌓</button>
     </div>
   </nav>
 
   <main>
-    <section id="movie_now_playing" class="movies-section"></section>
+    <section id="discover_all" class="movies-section"></section>
+    <section id="movie_now_playing" class="movies-section hide"></section>
     <section id="movie_popular" class="movies-section hide"></section>
+    <section id="movie_upcoming" class="movies-section hide"></section>
     <section id="tv_popular" class="movies-section hide"></section>
+    <section id="anime" class="movies-section hide"></section>
     <section id="trending_all_day" class="movies-section hide"></section>
   </main>
 
-  <template id="movie-card-template">
-    <div class="movie-card">
+  <template id="item-card-template">
+    <div class="item-card">
       <a class="detail-link" href=""><img class="poster" src="" alt="" /></a>
       <h3 class="title"></h3>
       <p class="info"></p>
