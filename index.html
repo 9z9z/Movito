@@ -1,31 +1,45 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>موفيتو | Movito</title>
-<link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Movito | الصفحة الرئيسية</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-<header>
-  <h1>موفيتو | Movito</h1>
-  <nav>
-    <a href="index.html">الرئيسية</a>
-    <a href="html/topRated.html">الأعلى تقييماً</a>
-    <a href="html/anime.html">أنمي</a>
-    <a href="html/collections.html">مجموعات</a>
-    <a href="html/search.html">بحث</a>
-    <a href="html/admin.html">لوحة التحكم</a>
-  </nav>
-</header>
+  <header class="navbar">
+    <div class="logo">Movito</div>
+    <nav class="nav-links">
+      <a href="#trending">ترند</a>
+      <a href="#top-rated">الأعلى تقييماً</a>
+      <a href="html/moviesGenre.html">أنواع</a>
+      <a href="html/tvShows.html">مسلسلات</a>
+      <a href="html/anime.html">أنمي</a>
+      <a href="html/collections.html">سلاسل</a>
+      <a href="html/search.html">بحث</a>
+      <a href="html/favorites.html">المفضلة</a>
+      <a href="html/admin.html">لوحة التحكم</a>
+    </nav>
+    <button id="mode-toggle">🌓</button>
+  </header>
 
-<main>
-  <section id="trending-section">
-    <h2>المحتوى الرائج</h2>
-    <div id="trending" class="card-container"></div>
+  <section id="trending" class="grid">
+    <h2>ترند</h2>
+    <div id="trending-container" class="grid"></div>
   </section>
-</main>
 
-<script type="module" src="js/index.js"></script>
+  <section id="top-rated" class="grid">
+    <h2>الأعلى تقييماً</h2>
+    <div id="top-rated-container" class="grid"></div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Movito</p>
+  </footer>
+
+  <script type="module" src="js/utils.js"></script>
+  <script type="module" src="js/favorites.js"></script>
+  <script type="module" src="js/index.js"></script>
+  <script type="module" src="js/topRated.js"></script>
 </body>
 </html>
