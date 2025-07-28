@@ -1,7 +1,44 @@
-
-      <h1>لوحة تحكم الأدمن</h1>
-      <input id="admin-server" placeholder="iframe src">
-      <button id="toggle-fav">Toggle Favorites</button>
-      <button id="toggle-watchlater">Toggle Watch Later</button>
-      <script src="admin.js"></script>
-    
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>لوحة التحكم - موفيتو</title>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <header>
+    <h1>لوحة التحكم - موفيتو</h1>
+    <nav>
+      <a href="../index.html">الرئيسية</a>
+      <a href="topRated.html">الأعلى تقييماً</a>
+      <a href="anime.html">أنمي</a>
+      <a href="collections.html">سلاسل أفلام</a>
+      <a href="search.html">بحث</a>
+      <a href="favorites.html">المفضلة</a>
+    </nav>
+  </header>
+  <main>
+    <h2>تعديل بيانات الأفلام والمسلسلات</h2>
+    <form id="editForm">
+      <label for="itemId">معرف الفيلم/المسلسل:</label><br />
+      <input type="text" id="itemId" required /><br />
+      <label for="itemType">النوع:</label><br />
+      <select id="itemType">
+        <option value="movie">فيلم</option>
+        <option value="tv">مسلسل</option>
+      </select><br />
+      <label for="iframeSrc">رابط السيرفر (iframe):</label><br />
+      <input type="url" id="iframeSrc" required /><br />
+      <label for="customTitle">عنوان مخصص:</label><br />
+      <input type="text" id="customTitle" /><br />
+      <label for="customDescription">وصف مخصص:</label><br />
+      <textarea id="customDescription"></textarea><br />
+      <label for="customKeywords">كلمات مفتاحية (HTML):</label><br />
+      <textarea id="customKeywords"></textarea><br />
+      <button type="submit">حفظ التعديلات</button>
+    </form>
+  </main>
+  <script type="module" src="../js/admin.js"></script>
+</body>
+</html>
