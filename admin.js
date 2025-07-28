@@ -8,11 +8,11 @@ serverInput.onchange = () => localStorage.setItem('movito_default_server', serve
 toggleFavBtn.onclick = () => {
   const x = localStorage.getItem('enable_fav') === 'true';
   localStorage.setItem('enable_fav', !x);
-  alert(`Favorites ${!x ? 'enabled' : 'disabled'}`);
+  alert(`المفضلات ${!x ? 'مفعلة' : 'معطلة'}`);
 };
 
 toggleWlBtn.onclick = () => {
   const x = localStorage.getItem('enable_watchlater') === 'true';
   localStorage.setItem('enable_watchlater', !x);
-  alert(`Watch Later ${!x ? 'enabled' : 'disabled'}`);
+  alert(`مشاهدة لاحقاً ${!x ? 'مفعلة' : 'معطلة'}`);
 };
