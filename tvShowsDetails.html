@@ -1,38 +1,22 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>تفاصيل مسلسل - Movito</title>
-  <link rel="stylesheet" href="style.css">
-</head>
+<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>تفاصيل المسلسل - موفيتو</title><link rel="stylesheet" href="../style.css"/></head>
 <body>
-  <nav class="navbar"><div class="logo">Movito</div></nav>
-  <main class="detail-page">
-    <aside class="detail-inputs">
-      <h3>تعديل المحتوى</h3>
-      <label>الاسم:</label><input id="edit-title">
-      <label>القصة:</label><textarea id="edit-overview"></textarea>
-      <label>كلمات مفتاحية (،):</label><input id="edit-keywords">
-      <label>سيرفر iframe URL:</label><input id="edit-server">
-      <button id="save-btn">حفظ</button>
-    </aside>
-    <section class="detail-view">
-      <div class="poster-big" id="photo"></div>
-      <div class="detail-info">
-        <h1 id="title"></h1>
-        <p id="year-rating"></p>
-        <p id="genres"></p>
-        <div id="overview"></div>
-        <h3>المواسم والحلقات</h3>
-        <ul id="seasons-list"></ul>
-        <h3>طاقم العمل والإخراج</h3>
-        <ul id="crew-list"></ul>
-        <button id="watch-btn" class="watch-btn">شاهد الآن</button>
-        <a href="index.html" class="back-btn">عودة</a>
-      </div>
-    </section>
+  <header class="navbar">
+    <div class="logo">Movito</div>
+    <nav class="nav-links">
+      <a href="../index.html">الرئيسية</a>
+      <a href="topRated.html">الأعلى تقييماً</a>
+      <a href="anime.html">أنمي</a>
+      <a href="collections.html">سلاسل</a>
+      <a href="search.html">بحث</a>
+      <a href="favorites.html">المفضلة</a>
+      <a href="admin.html">لوحة التحكم</a>
+    </nav>
+  </header>
+  <main id="tv-details" class="grid">
+    <h2>جارٍ التحميل...</h2>
   </main>
-  <script src="script.js"></script>
+  <script type="module" src="../js/tvShowsDetails.js"></script>
 </body>
 </html>
