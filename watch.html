@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Movito | مشاهدة</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <nav class="navbar"><div class="logo">Movito</div></nav>
+  <main class="watch-page">
+    <div id="video-container"></div>
+    <a href="javascript:history.back()" class="back-btn">عودة</a>
+  </main>
+  <script>
+  const apiKey = '6b2dec73b6697866a50cdaef60ccffcb';
+  const params = new URLSearchParams(location.search);
+  const id = params.get('id');
+  const type = params.get('type') || 'movie';
+  fetch(`https://api.themoviedb.org/3/${type}/${id}/videos?api_key=${apiKey}&language=ar`)
+    .then(res => res.json())
+    .then(data => {
+      const video = data.results.find(v => v.site==='YouTube');
+      if(video){
+        document.getElementById('video-container').innerHTML =
+          `<iframe width="100%" height="500" src="https://www.youtube.com/embed/${video.key}" frameborder="0" allowfullscreen></iframe>`;
+      } else {
+        document.getElementById('video-container').textContent = 'لا يوجد فيديو متاح.';
+      }
+    });
+  </script>
+</body>
+</html>
