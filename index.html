@@ -9,26 +9,18 @@
 <body>
   <header class="navbar">
     <div class="logo">Movito</div>
-    <div class="controls">
+    <div class="search-container">
       <input id="search-input" placeholder="ابحث عن فيلم، مسلسل، أو شخص..." />
       <button id="search-btn">🔍</button>
-      <button id="mode-toggle">🌓</button>
     </div>
+    <button id="mode-toggle">🌓</button>
   </header>
 
-  <section class="slider-section">
+  <section class="slider-section" id="main-slider">
     <button class="slide-btn prev">❮</button>
     <div class="slider" id="slider-container"></div>
     <button class="slide-btn next">❯</button>
   </section>
-
-  <template id="card-template">
-    <div class="card">
-      <a class="detail-link" href=""><img class="poster" src="" /></a>
-      <h3 class="title"></h3>
-      <p class="info"></p>
-    </div>
-  </template>
 
   <script src="script.js"></script>
 </body>
