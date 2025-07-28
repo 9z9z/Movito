@@ -1,55 +1,68 @@
-const apiKey='6b2dec73b6697866a50cdaef60ccffcb';
-const sections={
-  discover_all:'/discover/movie',
-  movie_now_playing:'/movie/now_playing',
-  movie_popular:'/movie/popular',
-  movie_upcoming:'/movie/upcoming',
-  tv_popular:'/tv/popular',
-  anime:'/discover/tv?with_genres=16',
-  trending_all_day:'/trending/all/day'
-};
+const apiKey = '6b2dec73b6697866a50cdaef60ccffcb';
+// Slider العناصر الرئيسية (جديد، ترند…)
+const mainEndpoints = ['/movie/now_playing','/trending/all/day','/movie/popular'];
+const mainSlider = document.getElementById('slider-container');
+let currentSlideIndex = 0, mainItems = [];
 
-// Theme toggle omitted for brevity
-
-async function fetchItems(endpoint){
-  const res=await fetch(`https://api.themoviedb.org/3${endpoint}?api_key=${apiKey}&language=ar&page=1`);
-  const data=await res.json(); return data.results;
+// ابني الكارد
+function createCard(item){
+  const tpl = document.getElementById('card-template').content.cloneNode(true);
+  const img = tpl.querySelector('.poster');
+  img.src = `https://image.tmdb.org/t/p/w500/${item.poster_path||item.backdrop_path}`;
+  img.onerror = () => img.src='resources/fallback.png';
+  tpl.querySelector('.title').textContent = item.title||item.name;
+  tpl.querySelector('.info').textContent = (item.release_date||item.first_air_date||'').slice(0,4);
+  const link = tpl.querySelector('.detail-link');
+  const type = item.media_type||(item.title?'movie':'tv');
+  link.href = `${type==='tv'?'tvShowsDetails':'movieDetail'}.html?id=${item.id}`;
+  return tpl;
 }
 
-function renderSection(sec){
-  const container=document.getElementById(sec);
-  container.innerHTML='';
-  fetchItems(sections[sec]).then(items=>{
-    items.forEach(item=>{
-      const tpl=document.getElementById('item-card-template').content.cloneNode(true);
-      const img=tpl.querySelector('.poster'), link=tpl.querySelector('.detail-link');
-      const type=item.media_type|| (sections[sec].startsWith('/tv')||sec==='anime'?'tv':'movie');
-      img.src=`https://image.tmdb.org/t/p/w500/${item.poster_path||item.backdrop_path}`;
-      img.onerror=()=>img.src='resources/D_moviesand_tv_show.png';
-      tpl.querySelector('.title').textContent=item.title||item.name;
-      tpl.querySelector('.info').textContent=(item.release_date||item.first_air_date||'').slice(0,4)+` • ⭐ ${item.vote_average}`;
-      link.href=`${type==='tv'?'tvShowsDetails':'movieDetail'}.html?id=${item.id}&type=${type}`;
-      container.appendChild(tpl);
+// جلب بيانات للسلايدر
+async function loadMainSlider(){
+  const res = await fetch(`https://api.themoviedb.org/3${mainEndpoints[0]}?api_key=${apiKey}&language=ar`);
+  const data = await res.json(); mainItems = data.results;
+  renderSlider();
+}
+function renderSlider(){
+  mainSlider.innerHTML='';
+  mainItems.slice(currentSlideIndex, currentSlideIndex+5).forEach(item=>{
+    mainSlider.appendChild(createCard(item));
+  });
+}
+
+// أزرار السلايدر
+document.querySelector('#main-slider .prev').onclick = ()=>{
+  currentSlideIndex = (currentSlideIndex-1+mainItems.length)%mainItems.length; renderSlider();
+};
+document.querySelector('#main-slider .next').onclick = ()=>{
+  currentSlideIndex = (currentSlideIndex+1)%mainItems.length; renderSlider();
+};
+
+// بحث
+const searchInput = document.getElementById('search-input');
+document.getElementById('search-btn').onclick = ()=>{
+  const q = searchInput.value.trim();
+  if(!q) return;
+  window.location.href = `search.html?q=${encodeURIComponent(q)}`;
+};
+
+// صفحة البحث
+if(window.location.pathname.includes('search.html')){
+  const params = new URLSearchParams(location.search);
+  const q = params.get('q');
+  document.getElementById('query-text').textContent = q;
+  fetch(`https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&language=ar&query=${encodeURIComponent(q)}`)
+    .then(r=>r.json()).then(d=>{
+      const container = document.getElementById('search-results');
+      d.results.forEach(item=>{
+        const card = createCard(item);
+        container.appendChild(card);
+      });
     });
-  });
 }
 
-document.querySelectorAll('.menu li').forEach(item=>{
-  item.addEventListener('click',()=>{
-    document.querySelectorAll('.menu li').forEach(i=>i.classList.remove('active'));
-    item.classList.add('active');
-    document.querySelectorAll('main section').forEach(s=>s.classList.add('hide'));
-    document.getElementById(item.dataset.section).classList.remove('hide');
-    renderSection(item.dataset.section);
-  });
+// تشغيل عند التحميل
+window.addEventListener('DOMContentLoaded', ()=>{
+  if(!window.location.pathname.includes('search.html')) loadMainSlider();
 });
-
-// Search
-const searchBtn=document.getElementById('search-btn');
-searchBtn.onclick=()=>{
-  const q=document.getElementById('search-input').value;
-  window.location.href=`search.html?q=${encodeURIComponent(q)}`;
-};
-
-// Load default
-window.addEventListener('DOMContentLoaded',()=>renderSection('discover_all'));
